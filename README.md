@@ -14,9 +14,7 @@ HTTP networking library written in Swift.
 
 ## Usage
 
----
-
-#### Configuring NetworkService
+### Configuring NetworkService
 
 User can configure NetworkService instance changing its default headers and validation settings.
 
@@ -31,9 +29,7 @@ let networkService = NetworkService(defaultHeaders: defaultHeaders)
 networkService.setSuccessfulStatusCodes(100..<600)
 ```
 
----
-
-#### Creating a Resource
+### Creating a Resource
 
 Necessary parameters for Resource objects are **method** -- *HTTPMethod enum case* and **url** -- *URL on which request will be sent*. User can also specify per-request **headers** -- *[String: String] dictionary* and request **body** -- *Data object*.
 
@@ -44,9 +40,7 @@ let resource = Resource(method: .post,
                         headers: headers)
 ```
 
----
-
-#### Performing a request
+### Performing a request
 
 User can perform request from calling a designated method on created Resource instance.
 
