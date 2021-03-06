@@ -14,7 +14,7 @@ public struct Resource {
     var body: Data?
     var headers: [String: String]
     
-    init(method: HTTPMethod,
+    public init(method: HTTPMethod,
          url: URL,
          body: Data? = nil,
          headers: [String: String] = [:]) {
@@ -29,7 +29,7 @@ public struct Resource {
 
 public extension Resource {
 
-    func performRequest<T: Decodable>(with networkService: NetworkService = NetworkService.shared,
+    func performRequest<T: Decodable>(with networkService: NetworkService = NetworkService(),
                                       decodingTo type: T.Type,
                                       completion: @escaping (Result<T, NetworkError>) -> ()) {
         
@@ -50,7 +50,7 @@ public extension Resource {
         }
     }
 
-    func performRequest(with networkService: NetworkService = NetworkService.shared,
+    func performRequest(with networkService: NetworkService = NetworkService(),
                         completion: @escaping (Result<Data, NetworkError>) -> ()) {
         
         let request = networkService.createRequest(resource: self)

@@ -2,12 +2,10 @@ import Foundation
 
 public struct NetworkService {
     
-    public static var shared = NetworkService()
-    
     private var successfulStatusCodes = 200..<300
     private var defaultHeaders: [String: String]
     
-    init(defaultHeaders: [String: String] = [:]) {
+    public init(defaultHeaders: [String: String] = [:]) {
         self.defaultHeaders = defaultHeaders
     }
 }
