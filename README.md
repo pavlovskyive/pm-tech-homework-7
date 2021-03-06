@@ -31,7 +31,15 @@ networkService.setSuccessfulStatusCodes(100..<600)
 
 ### Creating a Resource
 
-Necessary parameters for Resource objects are **method** -- *HTTPMethod enum case* and **url** -- *URL on which request will be sent*. User can also specify per-request **headers** -- *[String: String] dictionary* and request **body** -- *Data object*.
+Necessary parameters for Resource objects are:
+
+- **method**: HTTPMethod enum case
+- **url**: URL on which request will be sent 
+
+User can also specify:
+
+- per-request **headers**: [String: String] dictionary
+- request's **body** - Data object
 
 ```swift
 let resource = Resource(method: .post,
@@ -42,9 +50,9 @@ let resource = Resource(method: .post,
 
 ### Performing a request
 
-User can perform request from calling a designated method on created Resource instance.
+User can perform request from calling a designated method on created **Resource** instance.
 
-NetworkService parameter can be omitted, default NetworkService specification will be used.
+Parameter *NetworkService* can be omitted, **default NetworkService** specification will be used.
 
 Perform request and decode data:
 
