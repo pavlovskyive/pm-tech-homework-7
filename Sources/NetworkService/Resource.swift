@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// Resource holds all the necessary information for performing a request.
+/// Interface for working with NetworkService.
 public struct Resource {
     
     var method: HTTPMethod
@@ -28,7 +30,14 @@ public struct Resource {
 }
 
 public extension Resource {
-
+    
+    /// Performs request with decoding data.
+    ///
+    /// - Parameters:
+    ///   - networkService: configured NetworkService instance, can be ommited (default configuration will be used).
+    ///   - type: expected response type.
+    ///   - completion: handle response.
+    /// - Returns: Void
     func performRequest<T: Decodable>(with networkService: NetworkService = NetworkService(),
                                       decodingTo type: T.Type,
                                       completion: @escaping (Result<T, NetworkError>) -> ()) {
@@ -36,20 +45,19 @@ public extension Resource {
         performRequest(with: networkService) { result in
             switch result {
             case .success(let data):
-                data.decode(type: type) { result in
-                    switch result {
-                    case .success(let object):
-                        completion(.success(object))
-                    case .failure(let error):
-                        completion(.failure(.decodingError(error)))
-                    }
-                }
+                decode(data: data, type: T.self, completion: completion)
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
-
+    
+    /// Performs request without data decoding.
+    ///
+    /// - Parameters:
+    ///   - networkService: configured NetworkService instance, can be ommited (default configuration will be used).
+    ///   - completion: handle response.
+    /// - Returns: Void
     func performRequest(with networkService: NetworkService = NetworkService(),
                         completion: @escaping (Result<Data, NetworkError>) -> ()) {
         
@@ -57,4 +65,29 @@ public extension Resource {
         networkService.executeRequest(request: request, completion: completion)
     }
 
+}
+
+private extension Resource {
+    
+    /// Decode data to specified type.
+    ///
+    /// - Parameters:
+    ///   - data: Data for decoding.
+    ///   - type: Specified Decodable type.
+    ///   - completion: Specified type Result handler.
+    func decode<T: Decodable>(data: Data,
+                              type: T.Type,
+                              completion: @escaping(Result<T, NetworkError>) -> Void) {
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let object = try decoder.decode(type, from: data)
+            completion(.success(object))
+        } catch {
+            completion(.failure(.decodingError(error)))
+        }
+        
+    }
+    
 }
