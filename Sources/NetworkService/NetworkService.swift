@@ -5,21 +5,21 @@ public struct NetworkService {
     public static var shared = NetworkService()
     
     private var successfulStatusCodes = 200..<300
-    private var defaultHeaders = [String: String]()
+    private var defaultHeaders: [String: String]
+    
+    init(defaultHeaders: [String: String] = [:]) {
+        self.defaultHeaders = defaultHeaders
+    }
 }
 
 public extension NetworkService {
     
-    mutating func setSuccessfullStatusCodes(_ range: Range<Int>) {
+    mutating func setSuccessfulStatusCodes(_ range: Range<Int>) {
         
         let lowerBound = range.lowerBound >= 100 ? range.lowerBound : 100
         let upperBound = range.upperBound <= 600 ? range.upperBound : 600
         
         successfulStatusCodes = lowerBound..<upperBound
-    }
-    
-    mutating func setDefaultHeaders(_ headers: [String: String]) {
-        defaultHeaders = headers
     }
     
 }

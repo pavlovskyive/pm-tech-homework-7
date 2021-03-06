@@ -9,8 +9,6 @@ import Foundation
 
 public struct Resource {
     
-    private var networkService = NetworkService()
-    
     var method: HTTPMethod
     var url: URL
     var body: Data?
@@ -19,7 +17,7 @@ public struct Resource {
     init(method: HTTPMethod,
          url: URL,
          body: Data? = nil,
-         headers: [String: String]) {
+         headers: [String: String] = [:]) {
         
         self.method = method
         self.url = url
