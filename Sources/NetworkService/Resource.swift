@@ -21,6 +21,10 @@ public struct Resource {
          body: Data? = nil,
          headers: [String: String] = [:]) {
         
+        if method == .get && body != nil {
+            fatalError("GET method must not have a body")
+        }
+        
         self.method = method
         self.url = url
         self.body = body

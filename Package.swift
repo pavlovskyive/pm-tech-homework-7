@@ -24,5 +24,8 @@ let package = Package(
         .testTarget(
             name: "NetworkServiceTests",
             dependencies: ["NetworkService"]),
+        .testTarget(
+            name: "ResourceTests",
+            dependencies: ["NetworkService"]),
     ]
 )
